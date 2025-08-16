@@ -7,7 +7,7 @@ import updateCandidate from '../controllers/candidates/update/updateCandidate.js
 import deleteCandidate from '../controllers/candidates/delete/deleteCandidates.js';
 const router=express.Router();
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 router.post("/add", upload.single("resumeUrl"), addCandidate);
 router.get("/", getAllcandidates);
 router.put("/:id", updateCandidate);

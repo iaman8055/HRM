@@ -1,0 +1,24 @@
+.Topbar-main {
+  width: 100%;
+  font-family: 'Nunito';
+}
+
+.main-content-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center left & right */
+  margin: 20px;
+}
+
+.left {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;            /* removes default paragraph margin */
+  line-height: 1;       /* keep vertical space tight */
+}
+
+.right {
+  display: flex;
+  align-items: center;  /* Vertically center icons */
+  gap: 16px;
+}

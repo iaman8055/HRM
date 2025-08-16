@@ -7,7 +7,7 @@ const getAllcandidates=async(req,res)=>{
         candidates
     })
     } catch (error) {
-     res.statsu(500).json({message:"error finding candidates"})
+     res.status(500).json({message:"error finding candidates"})
     }
     
 }

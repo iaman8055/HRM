@@ -7,7 +7,7 @@ import getAllEmployeeByStatus from '../controllers/employees/getEmployee/getAllE
 
 const router=express.Router();
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 router.get("/", getAllEmployees);
 router.put("/:id", updateEmployee);
 router.delete("/:id",deleteEmployee);
