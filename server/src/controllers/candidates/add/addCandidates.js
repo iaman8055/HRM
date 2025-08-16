@@ -1,5 +1,6 @@
 import Candidate from '../../../model/candidates/candidate.js';
 import supabase from '../../../config/supabase.js';
+import { uploadToSupabase } from '../../../util/supabaseUpload.js';
 
 const addCandidate = async (req, res) => {
   const { fullName, email, phoneNumber, position, experience } = req.body;
@@ -13,28 +14,15 @@ const addCandidate = async (req, res) => {
   }
 
   try {
-    const fileName = `${fullName.replace(/\s/g, '_')}_${Date.now()}_${req.file.originalname}`;
+       const fileName = `${fullName.replace(/\s/g, '_')}_${Date.now()}_${req.file.originalname}`;
 
-    // Upload to Supabase storage
-    const { error } = await supabase.storage
-      .from('resumesfile')
-      .upload(fileName, req.file.buffer, {
-        contentType: req.file.mimetype,
-        upsert: false,
-      });
-
-    if (error) {
-      return res.status(500).json({ message: "Error uploading resume", error: error.message });
-    }
-
-    // Get public URL
-    const { data } = supabase.storage
-      .from('resumesfile')
-      .getPublicUrl(fileName);
-
-    if (!data || !data.publicUrl) {
-      return res.status(500).json({ message: "Failed to get public URL from Supabase" });
-    }
+    // Upload resume to Supabase (reusable function)
+    const publicUrl = await uploadToSupabase(
+      "resumesfile", // bucket name
+      fileName,
+      req.file.buffer,
+      req.file.mimetype
+    );
 
     // Save candidate to MongoDB
     const candidate = new Candidate({
@@ -43,7 +31,7 @@ const addCandidate = async (req, res) => {
       phoneNumber,
       position,
       experience,
-      resumeUrl: data.publicUrl,
+      resumeUrl:publicUrl,
     });
 
     await candidate.save();
