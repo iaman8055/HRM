@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
 import logo from '../../assets/images/Logo_Small.svg'
@@ -6,8 +6,16 @@ import candidate from '../../assets/images/Candidate_Icon.svg'
 import Attendance from '../../assets/images/Attendance_Icon.svg'
 import leaves from '../../assets/images/leaves_Icon.svg'
 import logout from '../../assets/images/logout_Icon.svg'
+import LogoutPopup from '../popup/Logout/LogoutPopup'
 
 const Sidebar = () => {
+   const [showLogout, setShowLogout] = useState(false);
+
+  const handleLogoutClick = () => {
+    setShowLogout(true);
+  };
+
+
   return (
     <div className='sidebar-main'>
       <div className='logo-search'>
@@ -36,11 +44,16 @@ const Sidebar = () => {
         </Link>
 
         <p className='heading'>Others</p>
-        <div className='side-nav'>
+        <div className='side-nav' onClick={handleLogoutClick}>
           <img src={logout} alt="Logout" />
           <p className='text'>Logout</p>
         </div>
       </div>
+            {showLogout && <LogoutPopup 
+            onClose={()=>{setShowLogout(false)}}
+
+             />}
+
     </div>
   )
 }

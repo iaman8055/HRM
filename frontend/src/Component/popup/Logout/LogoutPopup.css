@@ -1,0 +1,81 @@
+/* Popup Overlay and Container */
+.logout-popup-overlay {
+  font-family: 'Nunito';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logout-popup-container {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-popup-header {
+  background-color: #4D007D;
+  color: white;
+  padding: 16px 24px;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-popup-body {
+  padding: 24px;
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+}
+
+/* Button Container */
+.logout-popup-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+/* Button Styles */
+.logout-cancel-button {
+  background-color: #4D007D;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 32px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.logout-cancel-button:hover {
+  background-color: #3b0064;
+}
+
+.logout-confirm-button {
+  background-color: #fff;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 20px;
+  padding: 8px 32px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.logout-confirm-button:hover {
+  background-color: #dc2626;
+  color: #fff;
+}

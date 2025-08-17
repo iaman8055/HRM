@@ -13,9 +13,11 @@ import {
 
 const Candidate = () => {
   const dispatch = useDispatch();
-  const { list: candidates, loading, error } = useSelector(
-    (state) => state.candidates
-  );
+  const {
+    list: candidates,
+    loading,
+    error,
+  } = useSelector((state) => state.candidates);
 
   const [showPopup, setShowPopup] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState(null);
@@ -112,7 +114,12 @@ const Candidate = () => {
               <option value="ongoing">Ongoing</option>
             </select>
             <div className="select-arrow">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -134,7 +141,12 @@ const Candidate = () => {
               <option value="HR">HR</option>
             </select>
             <div className="select-arrow">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -168,9 +180,17 @@ const Candidate = () => {
           </thead>
           <tbody>
             {loading ? (
-              <p>Loading candidates...</p>
+              <tr>
+                <td colSpan="8" style={{ textAlign: "center" }}>
+                  Loading candidates...
+                </td>
+              </tr>
             ) : error ? (
-              <p style={{ color: "red" }}>{error}</p>
+              <tr>
+                <td colSpan="8" style={{ color: "red", textAlign: "center" }}>
+                  {error}
+                </td>
+              </tr>
             ) : filteredCandidates.length > 0 ? (
               filteredCandidates.map((candidate, index) => (
                 <tr key={candidate._id} className="table-row">
@@ -203,7 +223,9 @@ const Candidate = () => {
                         className="action-button"
                         onClick={() =>
                           setOpenDropdownId(
-                            openDropdownId === candidate._id ? null : candidate._id
+                            openDropdownId === candidate._id
+                              ? null
+                              : candidate._id
                           )
                         }
                       >
@@ -230,7 +252,11 @@ const Candidate = () => {
                 </tr>
               ))
             ) : (
-              <p>No candidates found.</p>
+              <tr>
+                <td colSpan="8" style={{ textAlign: "center" }}>
+                  No candidates found.
+                </td>
+              </tr>
             )}
           </tbody>
         </table>

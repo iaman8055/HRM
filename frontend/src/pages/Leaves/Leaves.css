@@ -4,11 +4,12 @@
   padding: 20px;
   min-height: 100vh;
 }
+
 .leave-management-grid {
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 20px;
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -26,7 +27,6 @@
   overflow: hidden;
 }
 
-/* Headers */
 .leave-card-header,
 .calendar-card-header {
   background: #4D007D;
@@ -36,14 +36,15 @@
   font-weight: 600;
 }
 
-/* Table wrapper for slider */
 .leave-table-wrapper {
-  overflow-x: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
+
 .leave-table-wrapper::-webkit-scrollbar {
   height: 6px;
 }
+
 .leave-table-wrapper::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
@@ -52,12 +53,13 @@
 .leave-table-header,
 .leave-row {
   display: grid;
-  grid-template-columns: 50px 150px 100px 120px 100px 70px; 
-  gap: 8px; 
+  grid-template-columns: 50px 150px 100px 120px 100px 70px;
+  gap: 8px;
   padding: 12px 15px;
   align-items: center;
   min-width: 600px;
 }
+
 .leave-table-header {
   background: #f8f9fa;
   font-weight: 600;
@@ -65,31 +67,34 @@
   border-bottom: 1px solid #e9ecef;
   color: #495057;
 }
+
 .leave-row {
   border-bottom: 1px solid #e9ecef;
   transition: 0.3s;
 }
+
 .leave-row:hover {
   background: #f8f9fa;
 }
 
 .leave-profile-pic {
-  width: 35px; 
+  width: 35px;
   height: 35px;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .leave-name {
   font-weight: 600;
   font-size: 13px;
   margin-bottom: 2px;
 }
+
 .leave-position {
   font-size: 11px;
   color: #6c757d;
 }
 
-/* Status */
 .leave-status-select {
   padding: 5px 10px;
   border-radius: 20px;
@@ -98,29 +103,33 @@
   font-weight: 500;
   cursor: pointer;
 }
+
 .leave-status-pending {
   background: #fef3c7;
   color: #d97706;
 }
+
 .leave-status-approved {
   background: #d1fae5;
   color: #059669;
 }
+
 .leave-status-rejected {
   background: #fecaca;
   color: #dc2626;
 }
 
-/* Calendar */
 .calendar-content {
   padding: 20px;
 }
+
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .calendar-button {
   background: none;
   border: 1px solid #dee2e6;
@@ -132,6 +141,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -146,6 +156,7 @@
   padding: 8px;
   color: #6c757d;
 }
+
 .calendar-day {
   aspect-ratio: 1;
   display: flex;
@@ -159,9 +170,11 @@
   border: 1px solid #e9ecef;
   background: white;
 }
+
 .calendar-day:hover {
   background: #f8f9fa;
 }
+
 .calendar-day.has-leaves {
   background: #e0f2fe;
   border-color: #4D007D;
@@ -184,32 +197,56 @@
   font-weight: bold;
 }
 
+.approved-leaves-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.approved-leaves-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.approved-leaves-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.approved-leaves-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .approved-leaves-list .approved-leave-item {
   display: flex;
   align-items: center;
-  gap: 8px; 
-  padding: 8px; 
+  gap: 8px;
+  padding: 8px;
   background: #f8f9fa;
   border-radius: 8px;
   margin-bottom: 6px;
 }
+
 .approved-leave-item img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .approved-leave-info {
   flex: 1;
 }
+
 .approved-leave-name {
-  font-size: 12px; 
+  font-size: 12px;
   font-weight: 600;
 }
+
 .approved-leave-position {
   font-size: 10px;
   color: #6c757d;
 }
+
 .approved-leave-date {
   font-size: 11px;
   font-weight: 600;
