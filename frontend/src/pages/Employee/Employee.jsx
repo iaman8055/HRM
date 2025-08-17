@@ -6,7 +6,7 @@ import { deleteEmployee, fetchEmployees, updateEmployee } from "../../util/redux
 import { useDispatch, useSelector } from "react-redux";
 
 const Employee = () => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { list: employees, loading, error } = useSelector(
     (state) => state.employees
   );
@@ -15,7 +15,10 @@ const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  // ✅ Fetch employees on mount
+  // ✅ Filter state
+  const [positionFilter, setPositionFilter] = useState("");
+
+  // Fetch employees on mount
   useEffect(() => {
     dispatch(fetchEmployees());
   }, [dispatch]);
@@ -52,33 +55,35 @@ const dispatch = useDispatch();
   if (loading) return <div className="content-area-e">Loading employees...</div>;
   if (error) return <div className="content-area-e">Error: {error}</div>;
 
+  // ✅ Filter employees based on position
+  const filteredEmployees = employees.filter(emp =>
+    positionFilter ? emp.position.toLowerCase() === positionFilter.toLowerCase() : true
+  );
 
-
-  console.log("employee data:", employees);
   return (
     <div className="content-area-e">
       {/* Filters */}
       <div className="filter-container">
         <div className="filter-group-can">
           <div className="select-container">
-            <select className="select-with-border">
-              <option>Position</option>
-              <option>Designer</option>
-              <option>Developer</option>
-              <option>HR</option>
+            <select
+              className="select-with-border"
+              value={positionFilter}
+              onChange={(e) => setPositionFilter(e.target.value)}
+            >
+              <option value="">All Positions</option>
+              <option value="Full Time">Full Time</option>
+              <option value="Intern">Intern</option>
+              <option value="Junior">Junior</option>
+              <option value="Senior">Senior</option>
+              <option value="Team Lead">Team Lead</option>
             </select>
             <div className="select-arrow">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fillRule="evenodd"
                   d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 
-                     4a1 1 0 01-1.414 0l-4-4a1 1 0 
-                     010-1.414z"
+                     4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                   clipRule="evenodd"
                 />
               </svg>
@@ -104,48 +109,53 @@ const dispatch = useDispatch();
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp, index) => (
-              <tr key={emp._id || emp.id} className="table-row">
-                <td className="table-cell">{index + 1}</td>
-                <td className="table-cell">{emp.fullName || emp.name}</td>
-                <td className="table-cell">{emp.email}</td>
-                <td className="table-cell">{emp.phoneNumber || emp.phone}</td>
-                <td className="table-cell">{emp.position}</td>
-                <td className="table-cell">{emp.department}</td>
-                <td className="table-cell">
-                  {emp.createdAt
-                    ? new Date(emp.dateofjoining).toLocaleDateString()
-                    : emp.dateofjoining}
-                </td>
-                <td className="table-cell">
-                  <div className="action-menu-wrapper">
-                    <button
-                      className="action-button"
-                      onClick={() =>
-                        setOpenDropdownId(
-                          openDropdownId === emp._id ? null : emp._id
-                        )
-                      }
-                    >
-                      <MoreVertical size={18} />
-                    </button>
-                    {openDropdownId === emp._id && (
-                      <div className="dropdown-menu">
-                        <button
-                          className="dropdown-item"
-                          onClick={() => {
-                            handleEditCandidate(emp);
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button className="dropdown-item" onClick={()=>handleDelete(emp._id)}>Delete</button>
-                      </div>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {filteredEmployees.length > 0 ? (
+              filteredEmployees.map((emp, index) => (
+                <tr key={emp._id || emp.id} className="table-row">
+                  <td className="table-cell">{index + 1}</td>
+                  <td className="table-cell">{emp.fullName || emp.name}</td>
+                  <td className="table-cell">{emp.email}</td>
+                  <td className="table-cell">{emp.phoneNumber || emp.phone}</td>
+                  <td className="table-cell">{emp.position}</td>
+                  <td className="table-cell">{emp.department}</td>
+                  <td className="table-cell">
+                    {emp.createdAt
+                      ? new Date(emp.dateofjoining).toLocaleDateString()
+                      : emp.dateofjoining}
+                  </td>
+                  <td className="table-cell">
+                    <div className="action-menu-wrapper">
+                      <button
+                        className="action-button"
+                        onClick={() =>
+                          setOpenDropdownId(openDropdownId === emp._id ? null : emp._id)
+                        }
+                      >
+                        <MoreVertical size={18} />
+                      </button>
+                      {openDropdownId === emp._id && (
+                        <div className="dropdown-menu">
+                          <button
+                            className="dropdown-item"
+                            onClick={() => handleEditCandidate(emp)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => handleDelete(emp._id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <p>No employees found.</p>
+            )}
           </tbody>
         </table>
       </div>

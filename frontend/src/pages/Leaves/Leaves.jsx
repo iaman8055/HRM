@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Leaves.css";
 import AddLeavePopup from "../../Component/popup/Leave/AddLeavePopup";
-import API from "../../util/api";
 import { useDispatch, useSelector } from "react-redux";
 import { addLeave, fetchLeaves, updateLeaveStatus } from "../../util/redux/leave/leaveSlice";
 
 const LeaveManagementSystem = () => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { leaves, loading } = useSelector((state) => state.leave);
+
   const [showPopUp, setShowPopup] = useState(false);
+  const [statusFilter, setStatusFilter] = useState(""); // ✅ Filter state
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
@@ -23,7 +24,6 @@ const dispatch = useDispatch();
 
   const handleAddLeave = () => setShowPopup(true);
   const handleClosePopup = () => setShowPopup(false);
-
   const handleSaveLeave = (formData) => {
     dispatch(addLeave(formData));
     setShowPopup(false);
@@ -76,40 +76,28 @@ const dispatch = useDispatch();
 
   if (loading) return <div className="content-area-a">Loading...</div>;
 
-  const approvedLeaves = leaves.filter((l) => l.status === "approved");
+  // ✅ Filtered leaves based on selected status
+  const filteredLeaves = leaves.filter(
+    (l) => statusFilter ? l.status.toLowerCase() === statusFilter.toLowerCase() : true
+  );
+
+  const approvedLeaves = filteredLeaves.filter((l) => l.status === "approved");
 
   return (
     <div className="leave-management-wrapper">
+      {/* Filters */}
       <div className="filter-container">
         <div className="filter-group">
           <div className="select-container">
-            <select className="select-can">
-              <option>Status</option>
-              <option>New</option>
-              <option>Selected</option>
-              <option>Rejected</option>
-            </select>
-            <div className="select-arrow">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="select-container">
-            <select className="select-with-border">
-              <option>Position</option>
-              <option>Designer</option>
-              <option>Developer</option>
-              <option>HR</option>
+            <select
+              className="select-can"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
             </select>
             <div className="select-arrow">
               <svg
@@ -132,6 +120,7 @@ const dispatch = useDispatch();
           Add Leave
         </button>
       </div>
+
       <div className="leave-management-grid">
         {/* Applied Leaves Table */}
         <div className="leave-card">
@@ -145,7 +134,7 @@ const dispatch = useDispatch();
               <div>Status</div>
               <div>Docs</div>
             </div>
-            {leaves.map((leave) => (
+            {filteredLeaves.map((leave) => (
               <div key={leave._id} className="leave-row">
                 <div>
                   <img
@@ -182,21 +171,9 @@ const dispatch = useDispatch();
           <div className="calendar-card-header">Leave Calendar</div>
           <div className="calendar-content">
             <div className="calendar-header">
-              <button
-                className="calendar-button"
-                onClick={() => changeMonth(-1)}
-              >
-                ‹
-              </button>
-              <h3>
-                {monthNames[currentMonth]}, {currentYear}
-              </h3>
-              <button
-                className="calendar-button"
-                onClick={() => changeMonth(1)}
-              >
-                ›
-              </button>
+              <button className="calendar-button" onClick={() => changeMonth(-1)}>‹</button>
+              <h3>{monthNames[currentMonth]}, {currentYear}</h3>
+              <button className="calendar-button" onClick={() => changeMonth(1)}>›</button>
             </div>
             <div className="calendar-grid">{renderCalendarDays()}</div>
 
@@ -216,6 +193,7 @@ const dispatch = useDispatch();
           </div>
         </div>
       </div>
+
       {showPopUp && (
         <AddLeavePopup onClose={handleClosePopup} onSave={handleSaveLeave} />
       )}
