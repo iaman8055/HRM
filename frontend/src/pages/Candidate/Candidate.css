@@ -1,0 +1,157 @@
+.content-area-c {
+  flex-grow: 1;
+  font-family: "Nunito";
+  padding: 24px;
+} /* Filter Styles */
+.filter-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+.filter-group {
+  display: flex;
+  gap: 16px;
+}
+.select-container {
+  position: relative;
+}
+.select-can {
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #a4a4a4;
+  border-radius: 50px;
+  padding: 8px 36px 8px 12px;
+  font-size: 14px;
+}
+.select-with-border {
+  appearance: none;
+  border-radius: 50px;
+  border: 1px solid #a4a4a4;
+  background-color: #ffffff;
+  padding: 8px 36px 8px 12px;
+  font-size: 14px;
+}
+.select-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.spacer {
+  flex-grow: 1;
+}
+.add-button {
+  background-color: #4d007d;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.add-button:hover {
+  background-color: #4c1d95;
+} /* Table Styles */
+.candidates-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 20px 20px 0 0;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+.table-header-can {
+  background-color: #4d007d;
+  color: #ffffff;
+  text-align: left;
+  height: 54px;
+}
+.table-header-cell {
+  padding: 12px 16px;
+  font-weight: 500;
+}
+.table-row:hover {
+  background-color: #f9fafb;
+}
+.table-cell {
+  padding: 12px 16px;
+} /* Status Dropdown Styles */
+.status-dropdown-container {
+  position: relative;
+}
+.status-dropdown {
+  appearance: none;
+  border-radius: 45px;
+  padding: 4px 32px 4px 12px;
+  font-size: 14px;
+}
+.status-new {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+.status-selected {
+  border: 1px solid #4338ca;
+  color: #4338ca;
+}
+.status-rejected {
+  border: 1px solid #b91c1c;
+  color: #b91c1c;
+}
+.dropdown-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.action-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+.action-button:hover {
+  color: #374151;
+}
+.action-menu-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  width: 180px;
+}
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #374151;
+  cursor: pointer;
+}
+.dropdown-item:hover {
+  background-color: #f9fafb;
+  color: #4d007d;
+}
+.card-container {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding-bottom: 24px;
+  min-height: 65vh;
+  overflow: visible;
+}

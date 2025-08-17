@@ -1,0 +1,140 @@
+.main{
+    width: full;
+    height: full;
+    font-family: 'Nunito',sans-serif;
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content-signup{
+    width: full;
+    height: fit-content;
+    display: flex;
+}
+
+.main-content-signup .left{
+    width: 50%;
+    height: full;
+    background: #4D007D;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.main-content-signup .left .left-main{
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.main-content-signup .left .left-content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.main-content-signup .left .left-content .heading{
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+.main-content-signup .left .left-content .sub{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #FFFFFF;
+
+}
+
+.right-panel {
+            padding-left: 200px;
+            padding-right: 200px;
+            width: 50%;
+            border: 1px #E5E5E5;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: flex;
+            gap:8px;
+            flex-direction: column;
+            justify-content: center;
+ }
+        
+.right-panel h2 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 100%;
+            color: black;
+         }
+                
+.form-group {
+            margin-bottom: 10px;
+            position: relative;
+            border: #E5E5E5;
+        }        
+        
+.form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: black;
+            font-size: 14px;
+        }
+        
+.form-group input {
+            width: 100%;
+            padding: 16px;
+            background-color: white;
+            color: #A4A4A4;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+.form-group .eye-icon {
+            position: absolute;
+            right: -12px;
+            top: 42px;
+            cursor: pointer;
+            color: #4D007D;
+        }
+        
+        .register-btn {
+            width: 141px;
+            background-color: #5a0076;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #5a0076;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+.required{
+    color: #B70000;
+}
