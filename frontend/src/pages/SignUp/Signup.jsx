@@ -17,7 +17,7 @@ const Signup = () => {
 
   useEffect(()=>{
   if(token){
-    navigate('/candidates',{ replace: true })
+    navigate('/',{ replace: true })
   }
   },[navigate, token])
 
@@ -54,7 +54,7 @@ const Signup = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("tokenExpiry", expiryTime);
 
-      navigate("/candidates")
+      navigate("/")
       
     } catch (err) {
       const msg =

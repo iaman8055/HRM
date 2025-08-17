@@ -22,7 +22,7 @@ const ProtectedRoute = () => {
   const pathname = location.pathname;
 
   const isProtected =
-    pathname === "/candidates" ||
+    pathname === "/" ||
     pathname === "/employees" ||
     pathname === "/attendance" ||
     pathname === "/leaves";
@@ -41,7 +41,7 @@ const ProtectedRoute = () => {
       navigate("/login", { replace: true });
     }
     if (isAuthRoute && token) {
-      navigate("/candidates", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [token, isProtected, isAuthRoute, navigate, isExpired]);
 

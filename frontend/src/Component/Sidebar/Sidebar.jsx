@@ -24,7 +24,7 @@ const Sidebar = () => {
       </div>
       <div className='navigation'>
         <p className='heading'>Recruitment</p>
-        <Link to='/candidates' className='side-nav'>
+        <Link to='/' className='side-nav'>
           <img src={candidate} alt="Candidates" />
           <p className='text'>Candidates</p>
         </Link>

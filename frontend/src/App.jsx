@@ -22,7 +22,7 @@ const App = () => {
         {/* Protected routes with layout */}
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
-            <Route path="/candidates" element={<Candidate />} />
+            <Route path="/" element={<Candidate />} />
             <Route path="/employees" element={<Employee />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/leaves" element={<Leaves />} />

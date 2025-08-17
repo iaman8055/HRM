@@ -10,7 +10,7 @@ const Topbar = () => {
    const location = useLocation()
 
   const routeTitles = {
-    '/candidates': 'Candidates',
+    '/': 'Candidates',
     '/employees': 'Employees',
     '/attendance': 'Attendance',
     '/leaves': 'Leaves',

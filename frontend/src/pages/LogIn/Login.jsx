@@ -24,7 +24,7 @@ const Login = () => {
 
   useEffect(()=>{
   if(token){
-    navigate('/candidates',{ replace: true })
+    navigate('/',{ replace: true })
   }
   },[navigate, token])
 
@@ -52,7 +52,7 @@ const handleSubmit = async (e) => {
   }, 2 * 60 * 60 * 1000);
 
   
-    navigate("/candidates")
+    navigate("/")
   } catch (err) {
     const msg =
       err.response?.data?.message || "Invalid credentials. Try again.";
