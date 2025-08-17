@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from "../../assets/images/Logo.svg";
 import pic from "../../assets/images/Rectangle 77.svg";
-import "./SignUp.css";
+import "./Signup.css"
 import API from "../../util/api";
 import { useNavigate } from "react-router-dom";
 
