@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/images/Logo.svg";
 import pic from "../../assets/images/Rectangle 77.svg";
-import API from "../../utils/api";
 import "./SignUp.css";
+import API from "../../util/api";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -11,6 +12,14 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+    const navigate = useNavigate();
+    const token =localStorage.getItem("token");
+
+  useEffect(()=>{
+  if(token){
+    navigate('/candidates',{ replace: true })
+  }
+  },[navigate, token])
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -27,7 +36,7 @@ const Signup = () => {
     setSuccess("");
 
     try {
-      const res = await API.post("/signup", {
+      const res = await API.post("auth/signup", {
         fullName: form.fullName,
         email: form.email,
         password: form.password,
@@ -41,12 +50,12 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       });
-
-      // Optionally store token
+      const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("tokenExpiry", expiryTime);
 
-      // Redirect if needed
-      // window.location.href = "/dashboard";
+      navigate("/candidates")
+      
     } catch (err) {
       const msg =
         err.response?.data?.message || "Something went wrong. Try again.";
@@ -59,7 +68,7 @@ const Signup = () => {
       <div className="logo">
         <img src={logo} alt="Logo" />
       </div>
-      <div className="main-content">
+      <div className="main-content-signup">
         <div className="left">
           <div className="left-main">
             <img src={pic} alt="Side Illustration" />
@@ -222,7 +231,7 @@ const Signup = () => {
           </form>
 
           <div className="login-link">
-            Already have an account? <a href="#">Login</a>
+            Already have an account? <a href="/login">Login</a>
           </div>
         </div>
       </div>

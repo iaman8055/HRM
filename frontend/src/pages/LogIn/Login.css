@@ -13,20 +13,20 @@
     align-items: center;
 }
 
-.main-content{
+.main-content-login{
     width: full;
     height: fit-content;
     display: flex;
 }
 
-.main-content .left{
+.main-content-login .left{
     width: 50%;
     height: full;
     background: #4D007D;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
-.main-content .left .left-main{
+.main-content-login .left .left-main{
     display: flex;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -37,20 +37,20 @@
     justify-content: center;
     align-items: center;
 }
-.main-content .left .left-content{
+.main-content-login .left .left-content{
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
     justify-content: center;
 }
-.main-content .left .left-content .heading{
+.main-content-login .left .left-content .heading{
     font-size: 20px;
     font-weight: 600;
     line-height: 100%;
     color: #FFFFFF;
 }
-.main-content .left .left-content .sub{
+.main-content-login .left .left-content .sub{
     font-size: 16px;
     font-weight: 400;
     line-height: 100%;

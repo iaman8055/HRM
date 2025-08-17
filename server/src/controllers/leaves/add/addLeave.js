@@ -1,18 +1,16 @@
-import Leave from "../../model/leave/leave.js";
-import Employee from "../../model/employees/employee.js";
-import { uploadToSupabase } from "../../util/uploadToSupabase.js"; // import your util
+import Employee from "../../../model/employees/employee.js";
+import Leave from "../../../model/leaves/leave.js";
+import { uploadToSupabase } from "../../../util/supabaseUpload.js";
 
 const addLeave = async (req, res) => {
   try {
-    const { employeeId, name,designation, date, reason } = req.body;
+    const { employeeId, fullName,designation, date, reason } = req.body;
     const file = req.file;
 
-    // Validate required fields
-    if (!employeeId || !name ||!designation || !date || !reason || !file) {
+    if (!employeeId || !fullName ||!designation || !date || !reason || !file) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if employee exists
     const employee = await Employee.findById(employeeId);
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
@@ -32,7 +30,7 @@ const addLeave = async (req, res) => {
     // Create leave entry
     const leave = new Leave({
       employeeId,
-      name,
+      fullName,
       designation,
       date,
       reason,

@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
-import './AddCandidatePopup.css';
+import '../Candidate/AddCandidatePopup.css';
 import { Calendar } from "lucide-react";
-import CalendarPicker from './CalendarPopup';
+import CalendarPicker from '../Calendar/CalendarPopup';
 
-const EditCandidatePopup = ({ onClose, onSave }) => {
+const EditCandidatePopup = ({employee, onClose, onSave }) => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    emailAddress: '',
-    phoneNumber: '',
-    department: '',
-    position: '',
-    dateOfJoining: '',
+    fullName: employee?.fullName || '',
+    emailAddress: employee?.email || '',
+    phoneNumber: employee?.phoneNumber || '',
+    department: employee?.department || '',
+    position: employee?.position || '',
+    dateOfJoining: employee?.dateofjoining 
+      ? new Date(employee.dateofjoining).toISOString().split("T")[0]
+      : '',
     agreeToTerms: false,
   });
 const [showCalendar, setShowCalendar] = useState(false);
@@ -117,7 +119,7 @@ const handleDateSelect = (date) => {
 
               />
                 <div
-                className="calendar-icon"
+                className="calendar-icon-e"
                 onClick={() => setShowCalendar(!showCalendar)}
               >
                 <Calendar size={20} />

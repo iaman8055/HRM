@@ -6,7 +6,7 @@ const leaveSchema = new mongoose.Schema({
     ref: "Employee", 
     required: true,
   },
-  name: {
+  fullName: {
     type: String,
     required: true,
   },

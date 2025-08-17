@@ -5,7 +5,11 @@
 
 .main-content {
   flex: 1;
+  flex-direction: column;
   padding: 20px;
   background-color: #f9f9f9;
-  
+}
+
+.page-content {
+  margin-top: 20px;
 }

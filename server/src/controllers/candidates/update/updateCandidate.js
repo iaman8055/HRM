@@ -24,8 +24,7 @@ const updateCandidate=async(req,res)=>{
         fullName: updatedCandidate.fullName,
         email: updatedCandidate.email,
         phoneNumber: updatedCandidate.phoneNumber,
-        position: updatedCandidate.position,
-        department: "--",
+        department: updatedCandidate.position,
         status: "present",
         task: "--",
         })

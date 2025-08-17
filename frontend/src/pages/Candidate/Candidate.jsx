@@ -1,71 +1,75 @@
-import { useState } from 'react';
-import { MoreVertical } from 'lucide-react';
-import AddCandidatePopup from '../../Component/popup/AddCandidatePopup';
-import './Candidate.css'
-import { useEffect } from 'react';
-import API from '../../util/api';
+import { useState } from "react";
+import { MoreVertical } from "lucide-react";
+import AddCandidatePopup from "../../Component/popup/Candidate/AddCandidatePopup";
+import "./Candidate.css";
+import { useEffect } from "react";
+import API from "../../util/api";
+import { useDispatch, useSelector } from "react-redux";
+import { addCandidate, deleteCandidate, fetchCandidates, updateCandidateStatus } from "../../util/redux/candidate/candidateSlice";
 
 const Candidate = () => {
-  const [candidates, setCandidates] = useState([]);
-  
+  const dispatch = useDispatch();
+  const { list: candidates, loading, error } = useSelector(
+    (state) => state.candidates
+  );
+
   const [showPopup, setShowPopup] = useState(false);
-const [openDropdownId, setOpenDropdownId] = useState(null);
-useEffect(() => {
-    const fetchCandidates = async () => {
-      try {
-        const res = await API.get('/candidate');
-        setCandidates(res.data.candidates);
-      } catch (error) {
-        console.error('Error fetching candidates:', error);
-      }
-    };
-    fetchCandidates();
-  }, [candidates]);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchCandidates());
+  }, [dispatch]);
+
   const getStatusClass = (status) => {
-    switch (status) {
-      case 'New': return 'status-dropdown status-new';
-      case 'Selected': return 'status-dropdown status-selected';
-      case 'Rejected': return 'status-dropdown status-rejected';
-      default: return 'status-dropdown status-new';
+    switch (status?.toLowerCase()) {
+      case "new":
+        return "status-dropdown status-new";
+      case "selected":
+        return "status-dropdown status-selected";
+      case "rejected":
+        return "status-dropdown status-rejected";
+      case "scheduled":
+        return "status-dropdown status-scheduled";
+      case "ongoing":
+        return "status-dropdown status-ongoing";
+      default:
+        return "status-dropdown status-new";
     }
   };
-  
-  
+
   const handleStatusChange = (id, newStatus) => {
-    console.log("id:",id)
-    setCandidates(candidates.map(candidate => 
-      candidate._id === id ? { ...candidate, status: newStatus } : candidate
-    ));
+    dispatch(updateCandidateStatus({ id, newStatus }));
   };
 
-  const handleAddCandidate = () => {
-    setShowPopup(true);
-  };
-
-  const handleClosePopup = () => {
+  const handleSaveCandidate = (formData) => {
+    dispatch(addCandidate(formData));
     setShowPopup(false);
   };
 
-  const handleSaveCandidate = async (formData) => {
-    try {
-      const data = new FormData();
-    data.append('fullName', formData.fullName);
-    data.append('email', formData.emailAddress);
-    data.append('phoneNumber', formData.phoneNumber);
-    data.append('position', formData.position);
-    data.append('status', 'New');
-    data.append('experience', formData.experience);
-    data.append('resumeUrl', formData.resume); 
-      const res = await API.post('/candidate/add',data);
-      setCandidates([...candidates, res.data.candidate]);
-      setShowPopup(false);
-    } catch (error) {
-      console.error('Error saving candidate:', error);
-    }
+  const handleDeleteCandidate = (id) => {
+    dispatch(deleteCandidate(id));
   };
-
+  const handleDownloadResume = (id) => { API.get(`/candidate/${id}`) 
+  .then((res) => 
+    { 
+      const resumeUrl = res.data.candidate.resumeUrl; 
+      if (resumeUrl) { 
+        const link = document.createElement("a"); link.href = resumeUrl;
+         link.download = resumeUrl.split("/").pop(); 
+         document.body.appendChild(link); link.click(); 
+         document.body.removeChild(link); 
+        } else {
+           console.error("Resume URL not found for candidate"); 
+          } }) 
+          .catch((err) => { 
+            console.error("Error fetching candidate resume:", err); 
+          }); 
+        };
+        const handleClosePopup=()=>{
+          setShowPopup(false)
+        }
   return (
-    <div className="content-area">
+    <div className="content-area-c">
       {/* Filters */}
       <div className="filter-container">
         <div className="filter-group">
@@ -77,8 +81,17 @@ useEffect(() => {
               <option>Rejected</option>
             </select>
             <div className="select-arrow">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
           </div>
@@ -90,20 +103,29 @@ useEffect(() => {
               <option>HR</option>
             </select>
             <div className="select-arrow">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
           </div>
         </div>
         <div className="spacer"></div>
-        <button className="add-button" onClick={handleAddCandidate}>
+        <button className="add-button" onClick={() => setShowPopup(true)}>
           Add Candidate
         </button>
       </div>
 
       {/* Table */}
-      <div className='card-container'>
+      <div className="card-container">
         <table className="candidates-table">
           <thead>
             <tr className="table-header-can">
@@ -118,29 +140,47 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {candidates.map((candidate,index) => (
+            {loading?(
+            <p>Loading candidates...</p>
+          )
+          : error ? (
+            <p style={{ color: "red" }}>{error}</p>
+          ) : (
+             candidates.map((candidate, index) => (
               <tr key={candidate._id} className="table-row">
-                <td className="table-cell">{index+1}</td>
+                <td className="table-cell">{index + 1}</td>
                 <td className="table-cell">{candidate.fullName}</td>
                 <td className="table-cell">{candidate.email}</td>
                 <td className="table-cell">{candidate.phoneNumber}</td>
                 <td className="table-cell">{candidate.position}</td>
                 <td className="table-cell">
                   <div className="status-dropdown-container">
-                    <select 
-                      className={getStatusClass(candidate.status)} 
-                      value={candidate.status}
-                      onChange={(e) => handleStatusChange(candidate._id, e.target.value)}
+                    <select
+                      className={getStatusClass(candidate.status)}
+                      value={candidate.status.toLowerCase()} // map API value
+                      onChange={(e) =>
+                        handleStatusChange(candidate._id, e.target.value)
+                      }
                     >
-                      <option value="New">New</option>
-                      <option value="Scheduled">Scheduled</option>
-                       <option value="Ongoing">Ongoing</option>
-                      <option value="Selected">Selected</option>
-                      <option value="Rejected">Rejected</option>
+                      <option value="new">New</option>
+                      <option value="scheduled">Scheduled</option>
+                      <option value="ongoing">Ongoing</option>
+                      <option value="selected">Selected</option>
+                      <option value="rejected">Rejected</option>
                     </select>
+
                     <div className="dropdown-arrow">
-                      <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -148,33 +188,49 @@ useEffect(() => {
                 <td className="table-cell">{candidate.experience}</td>
                 <td className="table-cell">
                   <div className="action-menu-wrapper">
-                     <button
-                       className="action-button"
-                       onClick={() =>
-                         setOpenDropdownId(openDropdownId === candidate._id ? null : candidate._id)
-                       }
-                     >
-                       <MoreVertical size={18} />
-                     </button>
-                     {openDropdownId === candidate._id && (
-                       <div className="dropdown-menu">
-                         <button className="dropdown-item">Download Resume</button>
-                         <button className="dropdown-item">Delete Candidate</button>
-                       </div>
-                     )}
-                   </div>
-
-               </td>
+                    <button
+                      className="action-button"
+                      onClick={() =>
+                        setOpenDropdownId(
+                          openDropdownId === candidate._id
+                            ? null
+                            : candidate._id
+                        )
+                      }
+                    >
+                      <MoreVertical size={18} />
+                    </button>
+                    {openDropdownId === candidate._id && (
+                      <div className="dropdown-menu">
+                        <button
+                          className="dropdown-item"
+                          onClick={() => handleDownloadResume(candidate._id)}
+                        >
+                          Download Resume
+                        </button>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => handleDeleteCandidate(candidate._id)}
+                        >
+                          Delete Candidate
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </td>
               </tr>
-            ))}
+            ))
+          )
+        }
+           
           </tbody>
         </table>
       </div>
-      
+
       {showPopup && (
         <AddCandidatePopup
-          onClose={handleClosePopup} 
-          onSave={handleSaveCandidate} 
+          onClose={handleClosePopup}
+          onSave={handleSaveCandidate}
         />
       )}
     </div>

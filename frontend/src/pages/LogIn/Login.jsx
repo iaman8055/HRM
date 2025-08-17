@@ -1,11 +1,12 @@
 import logo from "../../assets/images/Logo.svg";
 import "./Login.css";
 import pic from "../../assets/images/Rectangle 77.svg";
-import { useState } from "react";
-import API from "../../util/api";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../../util/api";
 
 const Login = () => {
+
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -15,10 +16,17 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e) => {  
     setForm({ ...form, [e.target.id]: e.target.value });
   };
   const navigate = useNavigate();
+    const token =localStorage.getItem("token");
+
+  useEffect(()=>{
+  if(token){
+    navigate('/candidates',{ replace: true })
+  }
+  },[navigate, token])
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -32,10 +40,19 @@ const handleSubmit = async (e) => {
     });
 
     setSuccess("Login successful!");
+    const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
     localStorage.setItem("token", res.data.token);
+    localStorage.setItem("tokenExpiry", expiryTime);
 
-    // ✅ Redirect to homepage
-    navigate("/candidate")
+ setTimeout(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiry");
+    alert("Session expired. Please login again.");
+    navigate("/login"); 
+  }, 2 * 60 * 60 * 1000);
+
+  
+    navigate("/candidates")
   } catch (err) {
     const msg =
       err.response?.data?.message || "Invalid credentials. Try again.";
@@ -49,7 +66,7 @@ const handleSubmit = async (e) => {
       <div className="logo">
         <img src={logo} alt="Logo" />
       </div>
-      <div className="main-content">
+      <div className="main-content-login">
         <div className="left">
           <div className="left-main">
             <img src={pic} alt="Side Illustration" />
@@ -148,7 +165,7 @@ const handleSubmit = async (e) => {
           </form>
 
           <div className="login-link">
-            Don't have an account? <a href="#">Register</a>
+            Don't have an account? <a href="/signup">Register</a>
           </div>
         </div>
       </div>

@@ -1,63 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { MoreVertical } from 'lucide-react';
-import './Employee.css';
-import EditCandidatePopup from '../../Component/popup/EditCandidatePopup';
-import API from '../../util/api';
-import AddLeavePopup from '../../Component/popup/AddLeavePopup';
+import { useState, useEffect } from "react";
+import { MoreVertical } from "lucide-react";
+import "./Employee.css";
+import EditCandidatePopup from "../../Component/popup/Employee/EditCandidatePopup";
+import { deleteEmployee, fetchEmployees, updateEmployee } from "../../util/redux/employee/employeeSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Employee = () => {
+const dispatch = useDispatch();
+  const { list: employees, loading, error } = useSelector(
+    (state) => state.employees
+  );
+
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  // ✅ Fetch employees from backend
+  // ✅ Fetch employees on mount
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await API.get('/employee');
-        setEmployees(response.data.employees || []);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching employees:', error);
-        setLoading(false);
-      }
-    };
+    dispatch(fetchEmployees());
+  }, [dispatch]);
 
-    fetchEmployees();
-  }, []);
+  const handleDelete = (id) => {
+    dispatch(deleteEmployee(id));
+  };
 
-  const handleEditCandidate = () => {
+  const handleEditCandidate = (emp) => {
+    setSelectedEmployee(emp);
     setShowPopup(true);
   };
 
   const handleClosePopup = () => {
     setShowPopup(false);
+    setSelectedEmployee(null);
   };
 
   const handleSaveEmployee = (formData) => {
-    const newEmployee = {
-      id: String(employees.length + 1).padStart(2, '0'),
+    const updatedData = {
       name: formData.fullName,
       email: formData.emailAddress,
       phone: formData.phoneNumber,
       position: formData.position,
-      department: formData.department || '--',
-      status: 'New',
+      department: formData.department,
+      status: "New",
       experience: formData.experience,
       dateOfJoining: new Date().toLocaleDateString(),
     };
-
-    setEmployees([...employees, newEmployee]);
+    dispatch(updateEmployee({ id: selectedEmployee._id, data: updatedData }));
     setShowPopup(false);
   };
 
-  if (loading) {
-    return <div className="content-area">Loading employees...</div>;
-  }
-console.log("employee data:",employees)
+  if (loading) return <div className="content-area-e">Loading employees...</div>;
+  if (error) return <div className="content-area-e">Error: {error}</div>;
+
+
+
+  console.log("employee data:", employees);
   return (
-    <div className="content-area">
+    <div className="content-area-e">
       {/* Filters */}
       <div className="filter-container">
         <div className="filter-group-can">
@@ -69,7 +68,12 @@ console.log("employee data:",employees)
               <option>HR</option>
             </select>
             <div className="select-arrow">
-              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 
@@ -110,8 +114,8 @@ console.log("employee data:",employees)
                 <td className="table-cell">{emp.department}</td>
                 <td className="table-cell">
                   {emp.createdAt
-                    ? new Date(emp.createdAt).toLocaleDateString()
-                    : emp.dateOfJoining}
+                    ? new Date(emp.dateofjoining).toLocaleDateString()
+                    : emp.dateofjoining}
                 </td>
                 <td className="table-cell">
                   <div className="action-menu-wrapper">
@@ -129,11 +133,13 @@ console.log("employee data:",employees)
                       <div className="dropdown-menu">
                         <button
                           className="dropdown-item"
-                          onClick={handleEditCandidate}
+                          onClick={() => {
+                            handleEditCandidate(emp);
+                          }}
                         >
                           Edit
                         </button>
-                        <button className="dropdown-item">Delete</button>
+                        <button className="dropdown-item" onClick={()=>handleDelete(emp._id)}>Delete</button>
                       </div>
                     )}
                   </div>
@@ -146,6 +152,7 @@ console.log("employee data:",employees)
 
       {showPopup && (
         <EditCandidatePopup
+          employee={selectedEmployee}   
           onClose={handleClosePopup}
           onSave={handleSaveEmployee}
         />

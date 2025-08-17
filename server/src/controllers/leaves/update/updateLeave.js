@@ -1,6 +1,5 @@
-import Leave from "../../model/leave/leave.js";
-import Employee from "../../model/employees/employee.js";
-import { uploadToSupabase } from "../../util/supabase.js"; 
+import Leave from "../../../model/leaves/leave.js";
+import { uploadToSupabase } from "../../../util/supabaseUpload.js";
 
 const updateLeave = async (req, res) => {
   try {
@@ -20,13 +19,13 @@ const updateLeave = async (req, res) => {
       // Upload to Supabase bucket
       const fileUrl = await uploadToSupabase("documents", fileName, fileBuffer, contentType);
 
-      leave.docs = fileUrl; // replace old file url with new one
+      leave.docs = fileUrl;
     }
 
     // Update fields if provided
     if (date) leave.date = date;
     if (reason) leave.reason = reason;
-    if (status) leave.status = status; // pending, approved, rejected
+    if (status) leave.status = status; 
 
     await leave.save();
 
