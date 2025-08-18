@@ -192,7 +192,7 @@ const handleSubmit = async (e) => {
                   type="text"
                   placeholder="Documents"
                   readOnly
-                  value={formData.documents}
+                  value={formData.documents ? formData.documents.name : ""}
                   className="form-input-leave"
                 />
                 <label className="upload-icon-leave">
