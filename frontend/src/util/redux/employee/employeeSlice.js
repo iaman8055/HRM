@@ -20,6 +20,7 @@ export const updateEmployee = createAsyncThunk(
   "employees/updateEmployee",
   async ({ id, data }, { rejectWithValue }) => {
     try {
+      console.log("data:",data)
       await API.put(`/employee/${id}`, data);
       return { id, data };
     } catch (error) {

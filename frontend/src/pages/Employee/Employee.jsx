@@ -45,7 +45,7 @@ const Employee = () => {
       department: formData.department,
       status: "New",
       experience: formData.experience,
-      dateOfJoining: new Date().toLocaleDateString(),
+      dateofjoining: formData.dateOfJoining,
     };
     dispatch(updateEmployee({ id: selectedEmployee._id, data: updatedData }));
     setShowPopup(false);

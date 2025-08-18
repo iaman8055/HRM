@@ -23,6 +23,7 @@ const [showCalendar, setShowCalendar] = useState(false);
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
     });
+    console.log("form data:",formData)
   };
 const handleDateSelect = (date) => {
     const formatted = `${date.getFullYear()}-${String(

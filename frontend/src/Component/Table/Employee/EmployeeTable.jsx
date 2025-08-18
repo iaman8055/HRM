@@ -33,8 +33,8 @@ const EmployeeTable = ({
                 <td className="table-cell">{emp.position}</td>
                 <td className="table-cell">{emp.department}</td>
                 <td className="table-cell">
-                  {emp.dateOfJoining
-                    ? new Date(emp.dateOfJoining).toLocaleDateString()
+                  {emp.dateofjoining
+                    ? new Date(emp.dateofjoining).toLocaleDateString()
                     : "--"}
                 </td>
                 <td className="table-cell">
