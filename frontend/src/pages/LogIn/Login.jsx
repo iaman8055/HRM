@@ -2,7 +2,7 @@ import logo from "../../assets/images/Logo.svg";
 import "./Login.css";
 import pic from "../../assets/images/Rectangle 77.svg";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../../util/api";
 
 const Login = () => {
@@ -165,7 +165,7 @@ const handleSubmit = async (e) => {
           </form>
 
           <div className="login-link">
-            Don't have an account? <a href="/signup">Register</a>
+            Don't have an account? <Link to="/signup">Register</Link>
           </div>
         </div>
       </div>

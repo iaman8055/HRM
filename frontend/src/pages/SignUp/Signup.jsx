@@ -3,7 +3,7 @@ import logo from "../../assets/images/Logo.svg";
 import pic from "../../assets/images/Rectangle 77.svg";
 import "./Signup.css"
 import API from "../../util/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -231,7 +231,7 @@ const Signup = () => {
           </form>
 
           <div className="login-link">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <Link to="/login">Login</Link>
           </div>
         </div>
       </div>
