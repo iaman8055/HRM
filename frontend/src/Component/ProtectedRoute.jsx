@@ -4,8 +4,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 const AUTH_ROUTES = [
   "/login",
   "/signup",
-  "/forgot-password",
-  "/reset-password",
+
 ];
 
 const ProtectedRoute = () => {
