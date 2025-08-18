@@ -86,7 +86,7 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="right-panel">
+        <div className="right-panel-signup">
           <h2>Welcome to Dashboard</h2>
 
           <form onSubmit={handleSubmit}>

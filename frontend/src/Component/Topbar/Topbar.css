@@ -6,19 +6,19 @@
 .main-content-topbar {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Vertically center left & right */
+  align-items: center; 
   margin: 20px;
 }
 
 .left {
   font-size: 20px;
   font-weight: 600;
-  margin: 0;            /* removes default paragraph margin */
-  line-height: 1;       /* keep vertical space tight */
+  margin: 0;           
+  line-height: 1;     
 }
 
 .right {
   display: flex;
-  align-items: center;  /* Vertically center icons */
+  align-items: center;  
   gap: 16px;
 }

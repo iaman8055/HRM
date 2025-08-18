@@ -60,7 +60,6 @@
   background-color: #ffffff;
   border-radius: 20px 20px 0 0;
   border-collapse: collapse;
-  overflow: hidden;
 }
 .table-header-can {
   background-color: #4d007d;
@@ -153,5 +152,6 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   padding-bottom: 24px;
   min-height: 65vh;
-  overflow: visible;
 }
+
+
