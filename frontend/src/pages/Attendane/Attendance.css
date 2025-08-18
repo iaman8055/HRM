@@ -65,7 +65,6 @@ border: 1px solid #A4A4A4;
   background-color: #4c1d95;
 }
 
-/* Table Styles */
 .attendance-table {
   width: 100%;
   background-color: #ffffff;
@@ -92,7 +91,6 @@ border: 1px solid #A4A4A4;
   padding: 12px 16px;
 }
 
-/* Status Dropdown Styles */
 .status-dropdown-container {
   position: relative;
 }
@@ -175,11 +173,10 @@ border: 1px solid #A4A4A4;
 }
 .table-wrapper {
   width: 100%;
-  overflow-x: auto; /* enable horizontal scroll */
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Optional: add some padding to avoid cut-off edges on mobile */
 .table-wrapper::-webkit-scrollbar {
   height: 6px;
 }
@@ -191,7 +188,7 @@ border: 1px solid #A4A4A4;
 
 .employees-table {
   width: 100%;
-  min-width: 800px; /* table can grow wider than container */
+  min-width: 800px; 
   border-collapse: collapse;
-  table-layout: auto; /* ensures proper column widths */
+  table-layout: auto;
 }

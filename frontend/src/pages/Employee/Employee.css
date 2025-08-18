@@ -69,7 +69,6 @@
   background-color: #ffffff;
   border-collapse: collapse;
   border: 1px;
-  overflow: hidden;
 }
 
 .table-header {
@@ -171,4 +170,5 @@
   padding-bottom: 24px;
   min-height: 65vh;
   border: 1px solid #E5E5E5;
+  overflow: visible;
 }
